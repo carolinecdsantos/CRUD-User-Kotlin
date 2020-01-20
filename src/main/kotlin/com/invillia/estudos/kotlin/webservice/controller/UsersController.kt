@@ -38,4 +38,10 @@ class UsersController {
         return User()
     }
     
+    @DeleteMapping("/{id}")
+    fun deleteById(@PathVariable id: Long) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id)
+        }
+    }
 }
