@@ -31,8 +31,8 @@ class UsersController {
     @PutMapping("/{id}")
     fun update(@PathVariable id: Long, @RequestBody user: User) : User {
         if (userRepository.existsById(id)) {
-            val safeUser = User(id, user.name, user.login, user.password)
-            userRepository.save(safeUser)
+            val safeUser = user.copy(id)
+            return userRepository.save(safeUser)
         }
 
         return User()
