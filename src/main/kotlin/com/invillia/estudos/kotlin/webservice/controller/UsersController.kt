@@ -2,6 +2,7 @@ package com.invillia.estudos.kotlin.webservice.controller
 
 import com.invillia.estudos.kotlin.webservice.model.User
 import com.invillia.estudos.kotlin.webservice.repository.UserRepository
+import com.invillia.estudos.kotlin.webservice.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -11,28 +12,28 @@ import java.util.*
 class UsersController {
     
     @Autowired
-    lateinit var userRepository: UserRepository
+    lateinit var userService: UserService
     
     @GetMapping
     fun list() : List<User> {
-        return userRepository.findAll().toList()
+        return userService.getUsers().toList()
     }
     
     @PostMapping
     fun create(@RequestBody user: User) : User{
-        return userRepository.save(user)
+        return userService.createUser(user)
     }
     
     @GetMapping("/{id}")
-    fun listById(@PathVariable id: Long) : User {
-        val user: Optional<User> = userRepository.findById(id)
-        return user.get()
+    fun listById(@PathVariable id: Long) : User? {
+        val user: User? = userService.getUserById(id)
+        return user
     }
     @PutMapping("/{id}")
     fun update(@PathVariable id: Long, @RequestBody user: User) : User {
-        if (userRepository.existsById(id)) {
+        if (userService.existsUserById(id)) {
             val safeUser = user.copy(id)
-            return userRepository.save(safeUser)
+            return userService.createUser(safeUser)
         }
 
         return User()
@@ -40,8 +41,8 @@ class UsersController {
     
     @DeleteMapping("/{id}")
     fun deleteById(@PathVariable id: Long) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id)
+        if (userService.existsUserById(id)) {
+            userService.deleteUser(id)
         }
     }
 }
