@@ -2,6 +2,7 @@ package com.invillia.estudos.kotlin.webservice.handler
 
 import com.invillia.estudos.kotlin.webservice.exception.ErrorDetails
 import com.invillia.estudos.kotlin.webservice.exception.UserNotFoundException
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice

@@ -29,20 +29,14 @@ class UsersController {
         val user: User? = userService.getUserById(id)
         return user
     }
+    
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody user: User) : User {
-        if (userService.existsUserById(id)) {
-            val safeUser = user.copy(id)
-            return userService.createUser(safeUser)
-        }
-
-        return User()
+    fun update(@PathVariable id: Long, @RequestBody user: User) : User? {
+        return userService.updateUser(id, user)
     }
     
     @DeleteMapping("/{id}")
     fun deleteById(@PathVariable id: Long) {
-        if (userService.existsUserById(id)) {
-            userService.deleteUser(id)
-        }
+        return userService.deleteUser(id)
     }
 }

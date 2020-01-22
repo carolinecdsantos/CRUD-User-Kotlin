@@ -40,7 +40,12 @@ class UserServiceImpl : UserService {
     }
 
     override fun deleteUser(id: Long) {
-        return userRepository.deleteById(id)
+        val user:Optional<User> = userRepository.findById(id)
+        if (user.isPresent) {
+            return userRepository.deleteById(id)
+        }
+        
+        throw UserNotFoundException("O usuário com id: $id não foi encontrado")
     }
 
     override fun existsUserById(id: Long): Boolean {
