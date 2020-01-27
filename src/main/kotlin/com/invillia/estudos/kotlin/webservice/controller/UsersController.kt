@@ -6,6 +6,7 @@ import com.invillia.estudos.kotlin.webservice.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import java.util.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("users")
@@ -20,7 +21,7 @@ class UsersController {
     }
     
     @PostMapping
-    fun create(@RequestBody user: User) : User{
+    fun create(@Valid @RequestBody user: User) : User{
         return userService.createUser(user)
     }
     
@@ -31,7 +32,7 @@ class UsersController {
     }
     
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody user: User) : User? {
+    fun update(@PathVariable id: Long, @Valid @RequestBody user: User) : User? {
         return userService.updateUser(id, user)
     }
     
