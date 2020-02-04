@@ -1,0 +1,19 @@
+version: '3.4'
+services:
+  webservice:
+    image: webservice
+    restart: always
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    working_dir: /.
+    environment:
+      TZ: America/Sao_Paulo
+    ports:
+      - "8080:8080"
+    command: mvn spring-boot run
+    networks:
+      - webservice-network
+networks:
+  webservice-network:
+    driver: bridge
